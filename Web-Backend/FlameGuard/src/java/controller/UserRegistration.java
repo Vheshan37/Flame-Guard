@@ -23,7 +23,6 @@ public class UserRegistration extends HttpServlet {
 
         // Processing Stage
         session.save(createUser(req, session)); // Create user entity & save it on a hibernate session
-
         session.beginTransaction().commit();
 
         // Finalizing Stage

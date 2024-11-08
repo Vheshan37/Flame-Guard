@@ -22,7 +22,7 @@ public class Department implements Serializable{
     @Column(name = "name", length = 45, nullable = false)
     private String name;
     
-    @Column(name = "code", length = 6, nullable = false)
+    @Column(name = "station_code", length = 6, nullable = false)
     private String code;
     
     @ManyToOne
