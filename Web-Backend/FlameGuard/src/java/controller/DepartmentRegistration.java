@@ -34,11 +34,11 @@ public class DepartmentRegistration extends HttpServlet {
     }
 
     public Department createDepartment(HttpServletRequest req, Session session) {
-        District district = (District) session.load(District.class, 2);
+        District district = (District) session.load(District.class, req.getParameter("district"));
 
         Department department = new Department();
-        department.setName("Gampaha Fire Station");
-        department.setCode("112233");
+        department.setName(req.getParameter("name"));
+        department.setCode(req.getParameter("code"));
         department.setDistrict(district);
         department.setStatus("in");
 
