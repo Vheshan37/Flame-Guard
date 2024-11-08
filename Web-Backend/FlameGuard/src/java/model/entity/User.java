@@ -1,7 +1,6 @@
 package model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,12 +25,18 @@ public class User implements Serializable {
     @Column(name = "mobile", length = 10, nullable = false)
     private String mobile;
 
-    @Column(name = "date_time", nullable = false)
-    private Date dateTime;
+    @Column(name = "address", length = 255, nullable = false)
+    private String address;
+
+    @Column(name = "username", length = 45, nullable = false)
+    private String username;
+
+    @Column(name = "password", length = 8, nullable = false)
+    private String password;
 
     @ManyToOne
-    @JoinColumn(name = "user_status_id")
-    private UserStatus status;
+    @JoinColumn(name = "district_id")
+    private District district;
 
     public User() {
     }
@@ -60,19 +65,36 @@ public class User implements Serializable {
         this.mobile = mobile;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public UserStatus getStatus() {
-        return status;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStatus(UserStatus status) {
-        this.status = status;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
 }
