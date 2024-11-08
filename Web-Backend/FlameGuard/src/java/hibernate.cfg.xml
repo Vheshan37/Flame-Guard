@@ -9,7 +9,10 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         
+        <mapping class="model.entity.Department"/>
         <mapping class="model.entity.District"/>
+        <mapping class="model.entity.SOS"/>
+        <mapping class="model.entity.User"/>
         
     </session-factory>
 </hibernate-configuration>
