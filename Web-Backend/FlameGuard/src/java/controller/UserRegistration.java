@@ -16,7 +16,7 @@ import org.hibernate.Session;
 public class UserRegistration extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Initializing Stage
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -29,18 +29,18 @@ public class UserRegistration extends HttpServlet {
         // Finalizing Stage
         session.close();
         resp.setContentType("application/json");
-        resp.getWriter().write("It's Done");
+        resp.getWriter().write("It's Done"); // change this when the mobile app completed
     }
 
     public User createUser(HttpServletRequest req, Session session) {
-        District district = (District) session.load(District.class, 2);
+        District district = (District) session.load(District.class, req.getParameter("district"));
 
         User user = new User();
-        user.setName("Vihanga Heshan");
-        user.setMobile("0719892932");
-        user.setAddress("231/D, Deenapamunuwa, Urapola.");
-        user.setUsername("Vheshan37");
-        user.setPassword("Vh2002@#");
+        user.setName(req.getParameter("name"));
+        user.setMobile(req.getParameter("mobile"));
+        user.setAddress(req.getParameter("address"));
+        user.setUsername(req.getParameter("username"));
+        user.setPassword(req.getParameter("password"));
         user.setDistrict(district);
 
         return user;
