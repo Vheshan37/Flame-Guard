@@ -1,7 +1,5 @@
 # FlameGuard 🔥
 
-![FlameGuard Logo](https://github.com/Vheshan37/Flame-Guard/blob/main/Assets/AppLogo.png?raw=true)
-
 FlameGuard is an IoT-based fire detection and alert system that integrates hardware and software to provide real-time fire alerts, making fire safety monitoring more accessible and efficient. The system consists of three main components:
 
 1. **Arduino Project** - Uses sensors like flame and smoke detectors with an Arduino Uno to detect fire and communicate alerts to the backend.
