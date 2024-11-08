@@ -12,7 +12,6 @@ FlameGuard is an IoT-based fire detection and alert system that integrates hardw
 - **React Native (JavaScript)** for mobile app development, creating a seamless user experience across iOS and Android.
 - **Java & Hibernate** for backend development, ensuring efficient data processing and ORM (Object-Relational Mapping).
 - **Arduino (C++)** to handle sensor readings and communication protocols.
-- **HTML, CSS** for any web-based front-end needs.
 
 **Databases:**
 - **MySQL** as the primary database for reliable and structured data storage.
