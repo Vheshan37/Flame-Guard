@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,25 +13,31 @@ import model.HibernateUtil;
 import model.entity.Department;
 import model.entity.District;
 import model.entity.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 @WebServlet(name = "DepartmentRegistration", urlPatterns = {"/DepartmentRegistration"})
 public class DepartmentRegistration extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Initializing Stage
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("success", false);
 
-        // Processing Stage
-        session.save(createDepartment(req, session));
-        session.beginTransaction().commit();
+        if (checkValidity) {
+            session.save(createDepartment(req, session));
+            session.beginTransaction().commit();
+            jsonObject.addProperty("message", "Registration successful! The department has been added to the system and is ready for use.");
+        } else {
 
-        // Finalizing Stage
+        }
+
         session.close();
         resp.setContentType("application/json");
-        resp.getWriter().write("It's Done, Department Registered"); // Change the response, When the mobile app completed
+        resp.getWriter().write(gson.toJson(jsonObject)); // Change the response, When the mobile app completed
     }
 
     public Department createDepartment(HttpServletRequest req, Session session) {
@@ -43,5 +50,28 @@ public class DepartmentRegistration extends HttpServlet {
         department.setStatus("in");
 
         return department;
+    }
+
+    public Object checkValidity(HttpServletRequest req, Session session) {
+        JsonObject jsonObject = new JsonObject();
+        if (req.getParameter("name").isEmpty()) {
+            jsonObject.addProperty("message", "Name is required.");
+        } else if (req.getParameter("name").length() > 45) {
+            jsonObject.addProperty("message", "Name size is too long.");
+        } else if (req.getParameter("code").isEmpty()) {
+            jsonObject.addProperty("message", "Code is required.");
+        } else if (req.getParameter("code").length() != 6) {
+            jsonObject.addProperty("message", "Code mus contain 6 digits.");
+        } else {
+            Criteria departmentTable = session.createCriteria(Department.class);
+            departmentTable.add(Restrictions.eq("code", req.getParameter("code")));
+            if (departmentTable.list().isEmpty()) {
+                return true;
+            } else {
+                
+            }
+        }
+
+        return null;
     }
 }
