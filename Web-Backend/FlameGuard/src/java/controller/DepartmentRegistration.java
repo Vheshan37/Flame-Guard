@@ -27,7 +27,9 @@ public class DepartmentRegistration extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("success", false);
 
-        if (checkValidity) {
+        JsonObject checkValidity = checkValidity(req, session);
+        checkValidity.get("status");
+        if (true) {
             session.save(createDepartment(req, session));
             session.beginTransaction().commit();
             jsonObject.addProperty("message", "Registration successful! The department has been added to the system and is ready for use.");
@@ -52,8 +54,10 @@ public class DepartmentRegistration extends HttpServlet {
         return department;
     }
 
-    public Object checkValidity(HttpServletRequest req, Session session) {
+    public JsonObject checkValidity(HttpServletRequest req, Session session) {
         JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status", false);
+
         if (req.getParameter("name").isEmpty()) {
             jsonObject.addProperty("message", "Name is required.");
         } else if (req.getParameter("name").length() > 45) {
@@ -66,12 +70,12 @@ public class DepartmentRegistration extends HttpServlet {
             Criteria departmentTable = session.createCriteria(Department.class);
             departmentTable.add(Restrictions.eq("code", req.getParameter("code")));
             if (departmentTable.list().isEmpty()) {
-                return true;
+                jsonObject.addProperty("status", true);
             } else {
-                
+                jsonObject.addProperty("message", "This department is already registered in the system.");
             }
         }
 
-        return null;
+        return jsonObject;
     }
 }
