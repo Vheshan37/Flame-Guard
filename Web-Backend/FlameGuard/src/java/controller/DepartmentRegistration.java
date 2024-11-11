@@ -26,13 +26,13 @@ public class DepartmentRegistration extends HttpServlet {
         jsonObject.addProperty("success", false);
 
         JsonObject checkValidity = checkValidity(req, session);
-        System.out.println("Status: " + checkValidity.get("status"));
-        if (true) {
+        if (checkValidity.get("status").getAsBoolean()) {
             session.save(createDepartment(req, session));
             session.beginTransaction().commit();
+            jsonObject.addProperty("success", true);
             jsonObject.addProperty("message", "Registration successful! The department has been added to the system and is ready for use.");
         } else {
-
+            jsonObject.addProperty("message", checkValidity.get("message").getAsString());
         }
 
         session.close();
