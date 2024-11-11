@@ -12,6 +12,8 @@ SplashScreen.preventAutoHideAsync();
 export default function SignIn() {
 
     // const [loadingUser, setLoadingUser] = useState(true);
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
     const [loaded, error] = useFonts({
         Dyna: require("../assets/fonts/DynaPuff.ttf"),
@@ -27,6 +29,31 @@ export default function SignIn() {
         }
     }, [loaded, error]);
 
+    async function loginProcess() {
+        if (!username) {
+            console.log("Username is required");
+            alert("Please enter a username.");
+        } else if (!password) {
+            console.log("Password is required");
+            alert("Please enter a password.");
+        } else {
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("password", password);
+            const request = await fetch("https://flameguard.loca.lt/FlameGuard/UserSignIn", {
+                method: "POST",
+                body: FormData,
+            });
+
+            if (request.ok) {
+                const response = await request.json();
+                console.log(response);
+            } else {
+                console.log("Response Error: " + request.status);
+            }
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/images/appLogo_Hi.png')} style={styles.appLogo} />
@@ -34,18 +61,18 @@ export default function SignIn() {
             <View style={styles.inputContainer}>
                 <View>
                     <Text style={styles.label}>Username <Text style={styles.textPrimary}>*</Text></Text>
-                    <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                    <TextInput style={styles.input} selectionColor={'#FF3131'} onChangeText={(text) => { setUsername(text) }} />
                 </View>
                 <View>
                     <Text style={styles.label}>Password <Text style={styles.textPrimary}>*</Text></Text>
-                    <TextInput style={styles.input} selectionColor={'#FF3131'} secureTextEntry={true} />
+                    <TextInput style={styles.input} selectionColor={'#FF3131'} secureTextEntry={true} onChangeText={(text) => { setPassword(text) }} />
                 </View>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.buttonSecondary} activeOpacity={0.6} onPress={() => router.replace("./signUp")}>
                     <Text style={styles.textPrimary}>Register</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={() => router.replace("./home")}>
+                <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={loginProcess}>
                     <Text style={styles.textWhite}>Login</Text>
                 </TouchableOpacity>
             </View>
