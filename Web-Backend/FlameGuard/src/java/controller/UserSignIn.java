@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+@MultipartConfig
 @WebServlet(name = "UserSignIn", urlPatterns = {"/UserSignIn"})
 public class UserSignIn extends HttpServlet {
 
@@ -27,10 +29,12 @@ public class UserSignIn extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status", false);
 
+        System.out.println(req.getParameter("username"));
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        if (username == null || username.trim().isEmpty()) {
+        if (username == null) {
             jsonObject.addProperty("message", "Username is required.");
         } else if (username.length() < 5 || username.length() > 20) {
             jsonObject.addProperty("message", "Username must be between 5 and 20 characters.");

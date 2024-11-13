@@ -31,10 +31,8 @@ export default function SignIn() {
 
     async function loginProcess() {
         if (!username) {
-            console.log("Username is required");
             alert("Please enter a username.");
         } else if (!password) {
-            console.log("Password is required");
             alert("Please enter a password.");
         } else {
             const formData = new FormData();
@@ -42,14 +40,18 @@ export default function SignIn() {
             formData.append("password", password);
             const request = await fetch("https://flameguard.loca.lt/FlameGuard/UserSignIn", {
                 method: "POST",
-                body: FormData,
+                body: formData,
             });
 
             if (request.ok) {
                 const response = await request.json();
-                console.log(response);
+                if (response.status) {
+                    router.replace("./home");
+                } else {
+                    alert(response.message);
+                }
             } else {
-                console.log("Response Error: " + request.status);
+                alert("Response Error: " + request);
             }
         }
     }
