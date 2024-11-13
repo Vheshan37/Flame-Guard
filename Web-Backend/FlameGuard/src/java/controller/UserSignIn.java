@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.HibernateUtil;
+import model.dto.User_DTO;
 import model.entity.User;
 import model.validators.Validator;
 import org.hibernate.Criteria;
@@ -48,8 +49,20 @@ public class UserSignIn extends HttpServlet {
                     Restrictions.eq("username", username),
                     Restrictions.eq("password", password)
             ));
+            userTable.setMaxResults(1);
 
             if (!userTable.list().isEmpty()) {
+
+                User user = (User) userTable.uniqueResult();
+
+                User_DTO userDTO = new User_DTO();
+                userDTO.setName(user.getName());
+                userDTO.setAddress(user.getAddress());
+                userDTO.setMobile(user.getMobile());
+                userDTO.setUsername(user.getUsername());
+                userDTO.setDistrict(user.getDistrict());
+
+                jsonObject.add("user", gson.toJsonTree(userDTO));
                 jsonObject.addProperty("status", true);
                 jsonObject.addProperty("message", "Validation successful.");
             } else {
