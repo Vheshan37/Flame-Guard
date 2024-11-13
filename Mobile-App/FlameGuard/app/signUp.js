@@ -14,6 +14,7 @@ export default function SignUp() {
 
     // const [loadingUser, setLoadingUser] = useState(true);
     const [selected, setSelected] = useState("");
+    const [step, setStep] = useState(1);
 
     const data = [
         { key: '1', value: 'Colombo' },
@@ -40,36 +41,62 @@ export default function SignUp() {
         <View style={styles.container}>
             <Image source={require('../assets/images/appLogo_Hi.png')} style={styles.appLogo} />
             <Text style={[styles.title, { fontFamily: loaded ? "PoppinsBold" : "System" }]}>Create New Account</Text>
-            <View style={styles.inputContainer}>
-                <View>
-                    <Text style={styles.label}>Name</Text>
-                    <TextInput style={styles.input} selectionColor={'#FF3131'} />
+
+            {step === 1 ?
+                <View style={styles.inputContainer}>
+                    <View>
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                    </View>
+                    <View>
+                        <Text style={styles.label}>Mobile (Fixed Line) <Text style={styles.textPrimary}>*</Text></Text>
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                    </View>
+                    <View>
+                        <Text style={styles.label}>Address <Text style={styles.textPrimary}>*</Text></Text>
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                    </View>
+                    <View>
+                        <Text style={styles.label}>District <Text style={styles.textPrimary}>*</Text></Text>
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={data}
+                            save="value"
+                        />
+                    </View>
                 </View>
-                <View>
-                    <Text style={styles.label}>Mobile (Fixed Line) <Text style={styles.textPrimary}>*</Text></Text>
-                    <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                :
+                <View style={styles.inputContainer}>
+                    <View>
+                        <Text style={styles.label}>Username <Text style={styles.textPrimary}>*</Text></Text>
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                    </View>
+                    <View>
+                        <Text style={styles.label}>Password <Text style={styles.textPrimary}>*</Text></Text>
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} secureTextEntry={true} />
+                    </View>
                 </View>
-                <View>
-                    <Text style={styles.label}>Address <Text style={styles.textPrimary}>*</Text></Text>
-                    <TextInput style={styles.input} selectionColor={'#FF3131'} />
+            }
+
+            {step === 1 ?
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonSecondary} activeOpacity={0.6} onPress={() => router.replace("./signIn")}>
+                        <Text style={styles.textPrimary}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={() => setStep(2)}>
+                        <Text style={styles.textWhite}>Next</Text>
+                    </TouchableOpacity>
                 </View>
-                <View>
-                    <Text style={styles.label}>District <Text style={styles.textPrimary}>*</Text></Text>
-                    <SelectList
-                        setSelected={(val) => setSelected(val)}
-                        data={data}
-                        save="value"
-                    />
+                :
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonSecondary} activeOpacity={0.6} onPress={() => setStep(1)}>
+                        <Text style={styles.textPrimary}>Back</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={() => alert("Registration")}>
+                        <Text style={styles.textWhite}>Register</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.buttonSecondary} activeOpacity={0.6} onPress={() => router.replace("./signIn")}>
-                    <Text style={styles.textPrimary}>Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={() => router.replace("./signUp2")}>
-                    <Text style={styles.textWhite}>Next</Text>
-                </TouchableOpacity>
-            </View>
+            }
 
             <View style={{
                 width: '90%',
