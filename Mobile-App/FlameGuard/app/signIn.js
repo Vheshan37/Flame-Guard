@@ -44,6 +44,7 @@ export default function SignIn() {
             if (request.ok) {
                 const response = await request.json();
                 if (response.status) {
+                    console.log("Response: " + response);
 
                     try {
                         await AsyncStorage.setItem("user", JSON.stringify(response.user));

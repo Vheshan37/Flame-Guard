@@ -11,8 +11,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
-    const [loadingUser, setLoadingUser] = useState(true);
-
     const [loaded, error] = useFonts({
         Dyna: require("../assets/fonts/DynaPuff.ttf"),
         PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
@@ -21,25 +19,23 @@ export default function App() {
         PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
     });
 
-    // useEffect(() => {
-    //     const checkUser = async () => {
-    //         try {
-    //             const user = await AsyncStorage.getItem("user");
-    //             if (user != null && user !== "") {
-    //                 router.replace("./home");
-    //                 console.log("User found");
-    //             } else {
-    //                 setLoadingUser(false);
-    //                 console.log("User not found");
-    //             }
-    //         } catch (e) {
-    //             console.log(e);
-    //             setLoadingUser(false);
-    //         }
-    //     };
+    useEffect(() => {
+        const checkUser = async () => {
+            try {
+                const user = await AsyncStorage.getItem("user");
+                if (user != null && user !== "") {
+                    router.replace("./home");
+                    console.log("User found");
+                } else {
+                    console.log("User not found");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
 
-    //     checkUser();
-    // }, []);
+        checkUser();
+    }, []);
 
     useEffect(() => {
         if (loaded || error) {

@@ -1,13 +1,15 @@
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Button, DrawerLayoutAndroid, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ConnectedIcon from "../assets/icons/connectedIcon";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,6 +17,8 @@ export default function Home() {
 
     const [isPressed1, setIsPressed1] = useState(false);
     const [isPressed2, setIsPressed2] = useState(false);
+
+    const drawer = useRef(null);
 
     const [loaded, error] = useFonts({
         Dyna: require("../assets/fonts/DynaPuff.ttf"),
@@ -32,9 +36,39 @@ export default function Home() {
         }
     }, [loaded, error]);
 
-    return (
-        <View style={styles.container}>
+    const navigationView = () => (
+        <View style={[styles.container, styles.navigationContainer]}>
 
+            <View style={styles.drawerLi}>
+                <Feather name="user" size={24} color="#5F5F5F" />
+                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Profile</Text>
+            </View>
+            <View style={styles.drawerLi}>
+                <MaterialIcons name="sensors" size={24} color="#5F5F5F" />
+                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Find Sensor</Text>
+            </View>
+            <View style={styles.drawerLi}>
+                <AntDesign name="setting" size={24} color="#5F5F5F" />
+                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Setting</Text>
+            </View>
+            <View style={styles.drawerLi}>
+                <Feather name="info" size={24} color="#5F5F5F" />
+                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>About</Text>
+            </View>
+            <View style={styles.drawerLi}>
+                <MaterialIcons name="logout" size={24} color="#5F5F5F" />
+                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Logout</Text>
+            </View>
+        </View>
+    );
+
+    return (
+        <DrawerLayoutAndroid
+            ref={drawer}
+            drawerWidth={300}
+            drawerPosition={"right"}
+            renderNavigationView={navigationView}
+            style={styles.container}>
             {/* Header Section */}
             <View style={styles.headerContainer}>
                 <View style={[styles.row, styles.headerLeft]}>
@@ -43,7 +77,13 @@ export default function Home() {
                 </View>
                 <View style={[styles.row, styles.headerRight]}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
-                    <Ionicons name="menu-outline" size={24} color="black" />
+                    <Pressable onPress={
+                        () => {
+                            drawer.current?.openDrawer()
+                        }
+                    }>
+                        <Ionicons name="menu-outline" size={24} color="black" />
+                    </Pressable>
                 </View>
             </View>
 
@@ -115,7 +155,7 @@ export default function Home() {
             </View>
 
             <StatusBar backgroundColor={'#0A1421'} />
-        </View >
+        </DrawerLayoutAndroid>
     );
 
 }
@@ -124,6 +164,35 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ECECEC',
+    },
+    navigationContainer: {
+        padding: 20,
+        paddingTop: 10
+    },
+    drawerIconContainer: {
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        paddingBottom: 15,
+        borderBottomColor: "#D0D0D0"
+    },
+    drawerIcon: {
+        backgroundColor: "#DEDEDE",
+        flexDirection: 'row',
+        // alignSelf: 'flex-start',
+        padding: 10,
+        borderRadius: 100,
+    },
+    drawerLi: {
+        flexDirection: 'row',
+        gap: 15,
+        alignItems: 'center',
+        paddingVertical: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: "#D0D0D0"
+    },
+    drawerLiText: {
+        fontSize: 14,
+        color: "#5F5F5F",
     },
     headerContainer: {
         backgroundColor: '#fff',
