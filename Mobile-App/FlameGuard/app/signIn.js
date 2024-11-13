@@ -49,7 +49,6 @@ export default function SignIn() {
 
                     try {
                         await AsyncStorage.setItem("user", JSON.stringify(response.user));
-                        alert("Login successful.");
                         router.replace("./home");
                     } catch (error) {
                         console.error("Data sync failed:", error);

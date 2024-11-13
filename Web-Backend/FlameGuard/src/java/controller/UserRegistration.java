@@ -26,12 +26,17 @@ public class UserRegistration extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         // Processing Stage
-        System.out.println(req.getParameter("name"));
         String name = req.getParameter("name");
         String mobile = req.getParameter("mobile");
         String address = req.getParameter("address");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+
+        System.out.println("Name: " + name);
+        System.out.println("Mobile: " + mobile);
+        System.out.println("Address: " + address);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status", false);
