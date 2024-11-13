@@ -39,26 +39,65 @@ export default function Home() {
     const navigationView = () => (
         <View style={[styles.container, styles.navigationContainer]}>
 
-            <View style={styles.drawerLi}>
-                <Feather name="user" size={24} color="#5F5F5F" />
-                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Profile</Text>
+            <View style={{ gap: 5, }}>
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { }} >
+                    <View style={styles.drawerLi}>
+                        <Feather name="user" size={24} color="#5F5F5F" />
+                        <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Profile</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={styles.lineSeperator} ></View>
+
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { }}>
+                    <View style={styles.drawerLi}>
+                        <MaterialIcons name="sensors" size={24} color="#5F5F5F" />
+                        <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Find Sensor</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={styles.lineSeperator} ></View>
+
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { }}>
+                    <View style={styles.drawerLi}>
+                        <AntDesign name="setting" size={24} color="#5F5F5F" />
+                        <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Setting</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={styles.lineSeperator} ></View>
+
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { }}>
+                    <View style={styles.drawerLi}>
+                        <Feather name="info" size={24} color="#5F5F5F" />
+                        <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>About</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={styles.lineSeperator} ></View>
             </View>
-            <View style={styles.drawerLi}>
-                <MaterialIcons name="sensors" size={24} color="#5F5F5F" />
-                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Find Sensor</Text>
+
+
+            <View style={{ gap: 5, }}>
+                <View style={styles.lineSeperator}></View>
+
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={
+                    async () => {
+                        await AsyncStorage.removeItem("user");
+                        router.replace("/");
+                    }
+                }>
+                    <View style={styles.drawerLi}>
+                        <MaterialIcons name="logout" size={24} color="#FF3131" />
+                        <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System", color: "#FF3131" }]}>
+                            Logout
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={styles.lineSeperator}></View>
             </View>
-            <View style={styles.drawerLi}>
-                <AntDesign name="setting" size={24} color="#5F5F5F" />
-                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Setting</Text>
-            </View>
-            <View style={styles.drawerLi}>
-                <Feather name="info" size={24} color="#5F5F5F" />
-                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>About</Text>
-            </View>
-            <View style={styles.drawerLi}>
-                <MaterialIcons name="logout" size={24} color="#5F5F5F" />
-                <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Logout</Text>
-            </View>
+
         </View>
     );
 
@@ -167,7 +206,8 @@ const styles = StyleSheet.create({
     },
     navigationContainer: {
         padding: 20,
-        paddingTop: 10
+        paddingTop: 10,
+        justifyContent: 'space-between'
     },
     drawerIconContainer: {
         alignItems: 'center',
@@ -178,7 +218,6 @@ const styles = StyleSheet.create({
     drawerIcon: {
         backgroundColor: "#DEDEDE",
         flexDirection: 'row',
-        // alignSelf: 'flex-start',
         padding: 10,
         borderRadius: 100,
     },
@@ -186,9 +225,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 15,
         alignItems: 'center',
-        paddingVertical: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        marginVertical: 5
+    },
+    lineSeperator: {
         borderBottomWidth: 1,
-        borderBottomColor: "#D0D0D0"
+        borderBottomColor: "#D0D0D0",
     },
     drawerLiText: {
         fontSize: 14,

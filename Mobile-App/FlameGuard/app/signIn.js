@@ -61,6 +61,7 @@ export default function SignIn() {
                     alert(response.message);
                 }
             } else {
+                console.log(request);
                 alert("Response Error: " + request);
             }
         }
