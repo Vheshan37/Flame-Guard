@@ -20,7 +20,7 @@ import org.hibernate.criterion.Restrictions;
 public class UserSignIn extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Initializing Stage
         Gson gson = new Gson();
         Session session = HibernateUtil.getSessionFactory().openSession();
