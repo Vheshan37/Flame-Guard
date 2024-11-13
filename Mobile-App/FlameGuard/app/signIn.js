@@ -36,6 +36,7 @@ export default function SignIn() {
             const formData = new FormData();
             formData.append("username", username);
             formData.append("password", password);
+
             const request = await fetch("https://flameguard.loca.lt/FlameGuard/UserSignIn", {
                 method: "POST",
                 body: formData,

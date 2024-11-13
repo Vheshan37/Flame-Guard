@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import model.entity.User;
 import model.validators.Validator;
 import org.hibernate.Session;
 
+@MultipartConfig
 @WebServlet(name = "UserRegistration", urlPatterns = {"/UserRegistration"})
 public class UserRegistration extends HttpServlet {
 
@@ -24,6 +26,7 @@ public class UserRegistration extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         // Processing Stage
+        System.out.println(req.getParameter("name"));
         String name = req.getParameter("name");
         String mobile = req.getParameter("mobile");
         String address = req.getParameter("address");

@@ -47,21 +47,17 @@ export default function SignUp() {
     };
 
     async function registrationProcess() {
-        const requestData = {
-            name: name,
-            mobile: mobile,
-            address: address,
-            district: selected,
-            username: username,
-            password: password
-        };
+        const requestData = new FormData();
+        requestData.append("name", name);
+        requestData.append("mobile", mobile);
+        requestData.append("address", address);
+        requestData.append("district", selected);
+        requestData.append("username", username);
+        requestData.append("password", password);
 
         const response = await fetch("https://flameguard.loca.lt/FlameGuard/UserRegistration", {
             method: "POST",
-            body: JSON.stringify(requestData),
-            headers: {
-                "Content-Type": "Application/json"
-            }
+            body: requestData,
         });
 
         if (response.ok) {
