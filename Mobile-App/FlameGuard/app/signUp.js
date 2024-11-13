@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View }
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from 'expo-status-bar';
@@ -12,9 +11,14 @@ SplashScreen.preventAutoHideAsync();
 
 export default function SignUp() {
 
-    // const [loadingUser, setLoadingUser] = useState(true);
     const [selected, setSelected] = useState("");
     const [step, setStep] = useState(1);
+
+    const [name, setName] = useState();
+    const [mobile, setMobile] = useState();
+    const [address, setAddress] = useState();
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
     const data = [
         { key: '1', value: 'Colombo' },
@@ -37,6 +41,39 @@ export default function SignUp() {
         }
     }, [loaded, error]);
 
+    const handleSelection = (selectedValue) => {
+        const selectedItem = data.find(item => item.value === selectedValue);
+        setSelected(selectedItem.key);
+    };
+
+    async function registrationProcess() {
+        const requestData = {
+            name: name,
+            mobile: mobile,
+            address: address,
+            district: selected,
+            username: username,
+            password: password
+        };
+
+        const response = await fetch("https://flameguard.loca.lt/FlameGuard/UserRegistration", {
+            method: "POST",
+            body: JSON.stringify(requestData),
+            headers: {
+                "Content-Type": "Application/json"
+            }
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+            console.log(json);
+        } else {
+            console.log("Response Error: " + response);
+        }
+
+
+    }
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/images/appLogo_Hi.png')} style={styles.appLogo} />
@@ -46,20 +83,20 @@ export default function SignUp() {
                 <View style={styles.inputContainer}>
                     <View>
                         <Text style={styles.label}>Name</Text>
-                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} onChangeText={(name) => { setName(name) }} value={name} />
                     </View>
                     <View>
                         <Text style={styles.label}>Mobile (Fixed Line) <Text style={styles.textPrimary}>*</Text></Text>
-                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} onChangeText={(mobile) => { setMobile(mobile) }} value={mobile} />
                     </View>
                     <View>
                         <Text style={styles.label}>Address <Text style={styles.textPrimary}>*</Text></Text>
-                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} onChangeText={(address) => { setAddress(address) }} value={address} />
                     </View>
                     <View>
                         <Text style={styles.label}>District <Text style={styles.textPrimary}>*</Text></Text>
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            setSelected={handleSelection}
                             data={data}
                             save="value"
                         />
@@ -69,11 +106,11 @@ export default function SignUp() {
                 <View style={styles.inputContainer}>
                     <View>
                         <Text style={styles.label}>Username <Text style={styles.textPrimary}>*</Text></Text>
-                        <TextInput style={styles.input} selectionColor={'#FF3131'} />
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} onChangeText={(username) => { setUsername(username) }} value={username} />
                     </View>
                     <View>
                         <Text style={styles.label}>Password <Text style={styles.textPrimary}>*</Text></Text>
-                        <TextInput style={styles.input} selectionColor={'#FF3131'} secureTextEntry={true} />
+                        <TextInput style={styles.input} selectionColor={'#FF3131'} secureTextEntry={true} onChangeText={(password) => { setPassword(password) }} value={password} />
                     </View>
                 </View>
             }
@@ -92,7 +129,7 @@ export default function SignUp() {
                     <TouchableOpacity style={styles.buttonSecondary} activeOpacity={0.6} onPress={() => setStep(1)}>
                         <Text style={styles.textPrimary}>Back</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={() => alert("Registration")}>
+                    <TouchableOpacity style={styles.buttonPrimary} activeOpacity={0.6} onPress={registrationProcess}>
                         <Text style={styles.textWhite}>Register</Text>
                     </TouchableOpacity>
                 </View>
