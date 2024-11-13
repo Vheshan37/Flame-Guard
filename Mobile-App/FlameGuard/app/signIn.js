@@ -1,8 +1,7 @@
-import { Image, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from 'expo-status-bar';
@@ -11,7 +10,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function SignIn() {
 
-    // const [loadingUser, setLoadingUser] = useState(true);
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
@@ -46,7 +44,18 @@ export default function SignIn() {
             if (request.ok) {
                 const response = await request.json();
                 if (response.status) {
-                    router.replace("./home");
+
+                    try {
+                        await AsyncStorage.setItem("user", JSON.stringify(response.user));
+                        alert("Login successful.");
+                        router.replace("./home");
+                    } catch (error) {
+                        console.error("Data sync failed:", error);
+                        alert("Login successful, but there was an issue saving your data.");
+                        router.replace("./home");
+                    }
+
+                    console.log(response);
                 } else {
                     alert(response.message);
                 }

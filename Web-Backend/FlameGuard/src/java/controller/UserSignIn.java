@@ -3,7 +3,6 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -30,11 +29,10 @@ public class UserSignIn extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("status", false);
 
-        System.out.println(req.getParameter("username"));
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
+        // Processing Stage
         if (username == null) {
             jsonObject.addProperty("message", "Username is required.");
         } else if (username.length() < 5 || username.length() > 20) {
@@ -43,7 +41,6 @@ public class UserSignIn extends HttpServlet {
             jsonObject.addProperty("message", "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, and a digit.");
         } else {
 
-            // Processing Stage
             Criteria userTable = session.createCriteria(User.class);
             userTable.add(Restrictions.and(
                     Restrictions.eq("username", username),
@@ -73,7 +70,7 @@ public class UserSignIn extends HttpServlet {
         // Finalizing Stage
         session.close();
         resp.setContentType("application/json");
-        resp.getWriter().write(gson.toJson(jsonObject)); // change this when the mobile app completed
+        resp.getWriter().write(gson.toJson(jsonObject));
     }
 
 }
