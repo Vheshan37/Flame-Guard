@@ -5,7 +5,10 @@
         <group>
             <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/controller/UserSignIn.java</file>
             <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/model/dto/User_DTO.java</file>
+            <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/socket/Home_Socket.java</file>
+            <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/controller/Home.java</file>
             <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/controller/UserRegistration.java</file>
+            <file>file:/E:/Quantum%20Blaze/Projects/Research%20Project/Fire%20Alarm%20System_FlameGuard/Flame-Guard/Web-Backend/FlameGuard/src/java/model/WebSocketManager.java</file>
         </group>
     </open-files>
 </project-private>
