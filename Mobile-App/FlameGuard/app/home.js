@@ -1,4 +1,4 @@
-import { Button, DrawerLayoutAndroid, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Button, DrawerLayoutAndroid, Image, Pressable, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useRef, useState } from 'react';
@@ -19,11 +19,11 @@ export default function Home() {
     const [isPressed2, setIsPressed2] = useState(false);
     const drawer = useRef(null);
 
-    const ws = new WebSocket('ws://host.com/path');
+    const ws = new WebSocket('ws://localhost:8080/FlameGuard/HomeSocket');
 
     ws.onopen = () => {
         // connection opened
-        ws.send('something'); // send a message
+        ws.send('open connection (react-native)'); // send a message
     };
 
     ws.onmessage = e => {

@@ -14,13 +14,13 @@ public class Home_Socket {
     @OnOpen
     public void onOpen(Session session) { // Register the session
         WebSocketManager.addSession(session);
-        System.out.println("New WebSocket connection: " + session.getId());
+        System.out.println("New WebSocket connection (for Home): " + session.getId());
     }
 
     @OnMessage
     public String onMessage(String message, Session session) {
         System.out.println("Received message from " + session.getId() + ": " + message);
-        return "Server response: " + message;
+        return "Server response (java-web): " + message;
     }
 
     @OnClose
