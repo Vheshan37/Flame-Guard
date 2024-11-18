@@ -19,7 +19,7 @@ export default function Home() {
     const [isPressed2, setIsPressed2] = useState(false);
     const drawer = useRef(null);
 
-    const ws = new WebSocket('ws://localhost:8080/FlameGuard/HomeSocket');
+    const ws = new WebSocket('ws://flameguard.loca.lt/FlameGuard/Home_WebSocket');
 
     ws.onopen = () => {
         // connection opened
