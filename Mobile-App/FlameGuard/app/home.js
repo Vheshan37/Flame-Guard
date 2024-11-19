@@ -1,4 +1,4 @@
-import { Button, DrawerLayoutAndroid, Image, Pressable, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { DrawerLayoutAndroid, Image, Pressable, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useRef, useState } from 'react';
@@ -21,9 +21,16 @@ export default function Home() {
 
     const ws = new WebSocket('ws://flameguard.loca.lt/FlameGuard/Home_WebSocket');
 
+    const keepAlive = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send('ping');  // Send a ping to keep the connection alive
+        }
+    }, 29000);  // Send a ping every 30 seconds
+
     ws.onopen = () => {
         // connection opened
         ws.send('open connection (react-native)'); // send a message
+        keepAlive;
     };
 
     ws.onmessage = e => {
@@ -39,6 +46,7 @@ export default function Home() {
     ws.onclose = e => {
         // connection closed
         console.log(e.code, e.reason);
+        clearInterval(keepAlive); // Stop sending pings when the connection is closed
     };
 
     const [loaded, error] = useFonts({
