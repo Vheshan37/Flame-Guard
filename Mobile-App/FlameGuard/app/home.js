@@ -23,13 +23,12 @@ export default function Home() {
 
     const keepAlive = setInterval(() => {
         if (ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');  // Send a ping to keep the connection alive
+            ws.send('ping');
         }
-    }, 29000);  // Send a ping every 30 seconds
+    }, 29000);
 
     ws.onopen = () => {
-        // connection opened
-        ws.send('open connection (react-native)'); // send a message
+        ws.send('open connection (react-native)');
         keepAlive;
     };
 
