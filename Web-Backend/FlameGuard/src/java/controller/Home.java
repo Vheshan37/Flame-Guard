@@ -15,7 +15,7 @@ import socket.Home_Socket;
 public class Home extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Step 1: Read JSON payload from the request
         StringBuilder jsonStringBuilder = new StringBuilder();
         try (BufferedReader reader = req.getReader()) {
