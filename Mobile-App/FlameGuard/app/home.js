@@ -33,19 +33,16 @@ export default function Home() {
     };
 
     ws.onmessage = e => {
-        // a message was received
         console.log(e.data);
     };
 
     ws.onerror = e => {
-        // an error occurred
         console.log(e.message);
     };
 
     ws.onclose = e => {
-        // connection closed
         console.log(e.code, e.reason);
-        clearInterval(keepAlive); // Stop sending pings when the connection is closed
+        clearInterval(keepAlive);
     };
 
     const [loaded, error] = useFonts({
