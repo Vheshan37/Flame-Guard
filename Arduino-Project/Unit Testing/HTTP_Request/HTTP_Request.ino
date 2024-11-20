@@ -16,7 +16,7 @@ void setup() {
 
 void loop() {
   HTTPClient request = HTTPClient();
-  request.begin("http://localhost:8080/FlameGuard/Home");
+  request.begin("https://flameguard.loca.lt/FlameGuard/Home?name=ESP32RequestParameters");
   int status = request.GET();
 
   if (status > 0) {
