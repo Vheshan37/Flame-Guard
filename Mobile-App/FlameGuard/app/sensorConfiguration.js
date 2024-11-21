@@ -11,36 +11,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function SensorConfiguration() {
 
-    const [isPressed1, setIsPressed1] = useState(false);
-    const [isPressed2, setIsPressed2] = useState(false);
     const drawer = useRef(null);
     const [wifiList, setWifiList] = useState([]);
-
-    const ws = new WebSocket('ws://flameguard.loca.lt/FlameGuard/Home_WebSocket');
-
-    const keepAlive = setInterval(() => {
-        if (ws.readyState === WebSocket.OPEN) {
-            ws.send('ping');
-        }
-    }, 29000);
-
-    ws.onopen = () => {
-        ws.send('open connection (react-native)');
-        keepAlive;
-    };
-
-    ws.onmessage = e => {
-        console.log(e.data);
-    };
-
-    ws.onerror = e => {
-        console.log(e.message);
-    };
-
-    ws.onclose = e => {
-        console.log(e.code, e.reason);
-        clearInterval(keepAlive);
-    };
 
     const [loaded, error] = useFonts({
         Dyna: require("../assets/fonts/DynaPuff.ttf"),
@@ -77,6 +49,7 @@ export default function SensorConfiguration() {
 
     const handleScan = async () => {
         const permissionGranted = await requestLocationPermission();
+        console.log("Permission: " + permissionGranted);
         if (permissionGranted) {
             try {
                 const networks = await WifiManager.loadWifiList();
