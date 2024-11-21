@@ -74,7 +74,7 @@ export default function Home() {
 
                 <View style={styles.lineSeperator} ></View>
 
-                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { }}>
+                <TouchableHighlight underlayColor="#DDDDDD" onPress={() => { router.push("./sensorConfiguration") }}>
                     <View style={styles.drawerLi}>
                         <MaterialIcons name="sensors" size={24} color="#5F5F5F" />
                         <Text style={[styles.drawerLiText, { fontFamily: loaded ? "PoppinsMedium" : "System" }]}>Find Sensor</Text>
